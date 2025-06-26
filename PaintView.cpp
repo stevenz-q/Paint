@@ -21,9 +21,8 @@
 
 
 // PaintView
-
 IMPLEMENT_DYNCREATE(PaintView, CView)
-
+// PaintView 消息映射
 BEGIN_MESSAGE_MAP(PaintView, CView)
 	// 标准打印命令
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
@@ -42,14 +41,16 @@ BEGIN_MESSAGE_MAP(PaintView, CView)
 	ON_COMMAND(IDM_SET_COLOR, &PaintView::OnSetColor)
 	ON_COMMAND(ID_SET_PENCIL, &PaintView::OnSetPencil)
 	ON_COMMAND(IDM_LINWIDTH, &PaintView::OnSetPenSize)
+	ON_COMMAND(ID_SET_CLEAR, &PaintView::OnSetClear)
 	ON_COMMAND(IDM_TEXT, &PaintView::OnText)
 	ON_COMMAND(IDM_SET_ERASER, &PaintView::OnSetEraser)
 	ON_COMMAND(ID_32785, &PaintView::OnPenSize1)
 	ON_COMMAND(ID_32786, &PaintView::OnPenSize3)
 	ON_COMMAND(ID_32787, &PaintView::OnPenSize5)
 	ON_COMMAND(ID_32788, &PaintView::OnPenSize8)
-	ON_COMMAND(ID_SET_CLEAR, &PaintView::OnSetClear)
-	END_MESSAGE_MAP()
+	ON_COMMAND(ID_ISFilled, &PaintView::OnSetIsfilled)
+	ON_UPDATE_COMMAND_UI(ID_ISFilled, &PaintView::OnUpdateIsfilled)
+END_MESSAGE_MAP()
 
 // PaintView 构造
 PaintView::PaintView() noexcept
@@ -62,6 +63,8 @@ PaintView::PaintView() noexcept
 	m_PointEnd = CPoint(0, 0);
 	m_DrawType = DrawType::Pencil; // 默认画笔
 	m_TextId = 10086;
+	m_Edit = nullptr; // 初始化编辑框为空指针
+	m_IsFilled = 0; // 是否填充，默认不填充
 }
 
 // PaintView 析构
@@ -157,9 +160,16 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 		CPen newPen, * oldPen;
 		newPen.CreatePen(PS_SOLID, m_PenSize, m_PenColor); // 创建一支笔
 		oldPen = dc.SelectObject(&newPen); // 选择换哪支笔
-
+		CBrush brush;
+		if (m_IsFilled) {
+			brush.CreateSolidBrush(m_BrushColor); // 创建填充画刷
+			dc.SelectObject(&brush); // 选择画刷
+		}
+		else {
+			dc.SelectStockObject(NULL_BRUSH); // 使用透明画刷
+		}
 		switch (m_DrawType) {
-		case DrawType::LineSegment:
+		case DrawType::LineSegment:// 绘制线段
 
 			dc.SetROP2(R2_NOTXORPEN); // 再画一次可以将刚才的消掉，可以不用重绘就能随意在屏幕画了再"擦"
 
@@ -176,11 +186,11 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 		case DrawType::Rectangle: // 绘制矩形
 		{
 			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色（背景色或笔的颜色）
-			dc.SelectStockObject(5); // 透明画刷，避免覆盖
+			//dc.SelectStockObject(NULL_BRUSH); // 使用透明画刷，避免填充颜色
+
 
 			CRect rectP1(m_PointBegin, m_PointEnd); // 起点与终点
 			dc.Rectangle(rectP1);
-
 			CRect rectP2(m_PointBegin, point); // 起点与终点
 			dc.Rectangle(rectP2);
 
@@ -191,7 +201,7 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 		case DrawType::Circle: // 绘制圆形
 		{
 			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色（背景色或笔的颜色）
-			dc.SelectStockObject(5); // 透明画刷，避免覆盖
+			//dc.SelectStockObject(5); // 透明画刷，避免覆盖
 
 			CRect rectP1(m_PointBegin, m_PointEnd); // 起点与终点
 			ConvertToSquare(rectP1);
@@ -207,7 +217,7 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 		case DrawType::Ellipse:// 绘制椭圆
 		{
 			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色（背景色或笔的颜色）
-			dc.SelectStockObject(5); // 透明画刷，避免覆盖
+			//dc.SelectStockObject(5); // 透明画刷，避免覆盖
 
 			CRect rectP1(m_PointBegin, m_PointEnd); // 起点与终点
 			dc.Ellipse(rectP1);
@@ -616,4 +626,21 @@ void PaintView::OnSetClear()
 		GetClientRect(&rect);
 		dc.FillSolidRect(rect, RGB(255, 255, 255));
 	// TODO: 在此添加控件通知处理程序代码
+}
+
+void PaintView::OnSetIsfilled()
+{
+	m_IsFilled = !m_IsFilled; // 切换填充状态
+}
+
+void PaintView::OnUpdateIsfilled(CCmdUI* pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	// 更新填充状态
+	if (m_IsFilled) {
+	pCmdUI->SetCheck(1); // 选中
+	}
+	else {
+	pCmdUI->SetCheck(0); // 不选中
+	}
 }

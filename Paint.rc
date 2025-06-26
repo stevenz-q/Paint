@@ -113,7 +113,7 @@ BEGIN
     BEGIN
         MENUITEM "新建(&N)\tCtrl+N",              ID_FILE_NEW
         MENUITEM "打开(&O)...\tCtrl+O",           ID_FILE_PAGE_SETUP
-        MENUITEM "保存(&S)\tCtrl+S",              ID_FILE_SAVE
+        MENUITEM "保存(&S)\tCtrl+S",              ID_FILE_OPEN
         MENUITEM "另存为(&A)...",                  ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
         MENUITEM "打印(&P)...\tCtrl+P",           ID_FILE_PRINT
@@ -139,8 +139,10 @@ BEGIN
     END
     POPUP "工具(&T)"
     BEGIN
-        MENUITEM "橡皮",                          IDM_SET_ERASER
+        MENUITEM "铅笔",                          ID_SET_PENCIL
         MENUITEM "文本",                          IDM_TEXT
+        MENUITEM SEPARATOR
+        MENUITEM "橡皮",                          IDM_SET_ERASER
         MENUITEM "清空",                          ID_SET_CLEAR
     END
     POPUP "画笔(&P)"
@@ -153,6 +155,8 @@ BEGIN
         MENUITEM "矩形",                          IDM_RECTANGLE
         MENUITEM "圆",                           IDM_CIRCLE
         MENUITEM "椭圆",                          IDM_ECLIPSE
+        MENUITEM SEPARATOR
+        MENUITEM "填充图",                         ID_ISFilled, INACTIVE
     END
     POPUP "粗细(&W)"
     BEGIN

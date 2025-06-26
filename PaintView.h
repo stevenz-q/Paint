@@ -25,8 +25,8 @@ public:
 	enum class DrawType {
 		LineSegment, Circle, Rectangle, Ellipse, Pencil, Eraser, Text
 	}m_DrawType;
-
-	int m_TextId;
+	int m_TextId;// ÎÄ±¾ID
+	int m_IsFilled;// ÊÇ·ñÌî³ä
 	CEdit* m_Edit = nullptr;
 	CPoint m_TextPos = CPoint(0, 0);
 
@@ -74,6 +74,8 @@ public:
 	afx_msg void OnPenSize5();
 	afx_msg void OnPenSize8();
 	afx_msg void OnSetClear();
+	afx_msg void OnUpdateIsfilled(CCmdUI* pCmdUI);
+	afx_msg void PaintView::OnSetIsfilled();
 };
 
 
