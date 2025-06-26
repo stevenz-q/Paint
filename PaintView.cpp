@@ -12,7 +12,7 @@
 #include "PaintView.h"
 #include "resource.h"
 #include "CSetPenSizeDialog.h"
-
+#include "MainFrm.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -30,6 +30,8 @@ BEGIN_MESSAGE_MAP(PaintView, CView)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
 	ON_COMMAND(ID_FILE_SAVE, &PaintView::OnFileSave)
+	ON_COMMAND(ID_FILE_SAVE_AS, &PaintView::OnFileSave)
+	ON_COMMAND(ID_FILE_PAGE_SETUP, &PaintView::ONLoadFile)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_MOUSEMOVE()
 	ON_WM_LBUTTONUP()
@@ -46,10 +48,10 @@ BEGIN_MESSAGE_MAP(PaintView, CView)
 	ON_COMMAND(ID_32786, &PaintView::OnPenSize3)
 	ON_COMMAND(ID_32787, &PaintView::OnPenSize5)
 	ON_COMMAND(ID_32788, &PaintView::OnPenSize8)
-END_MESSAGE_MAP()
+	ON_COMMAND(ID_SET_CLEAR, &PaintView::OnSetClear)
+	END_MESSAGE_MAP()
 
-// PaintView 构造/析构
-
+// PaintView 构造
 PaintView::PaintView() noexcept
 {
 	// TODO: 在此处添加构造代码
@@ -62,6 +64,7 @@ PaintView::PaintView() noexcept
 	m_TextId = 10086;
 }
 
+// PaintView 析构
 PaintView::~PaintView()
 {
 	if (m_Edit != nullptr) {
@@ -70,6 +73,7 @@ PaintView::~PaintView()
 	}
 }
 
+// PaintView 预创建窗口
 BOOL PaintView::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: 在此处通过修改
@@ -79,7 +83,6 @@ BOOL PaintView::PreCreateWindow(CREATESTRUCT& cs)
 }
 
 // PaintView 绘图
-
 void PaintView::OnDraw(CDC* /*pDC*/)
 {
 	PaintDoc* pDoc = GetDocument();
@@ -92,18 +95,19 @@ void PaintView::OnDraw(CDC* /*pDC*/)
 
 
 // PaintView 打印
-
 BOOL PaintView::OnPreparePrinting(CPrintInfo* pInfo)
 {
 	// 默认准备
 	return DoPreparePrinting(pInfo);
 }
 
+// PaintView 打印开始和结束
 void PaintView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: 添加额外的打印前进行的初始化过程
 }
 
+// PaintView 打印结束
 void PaintView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
 	// TODO: 添加打印后进行的清理过程
@@ -111,7 +115,6 @@ void PaintView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 
 
 // PaintView 诊断
-
 #ifdef _DEBUG
 void PaintView::AssertValid() const
 {
@@ -132,8 +135,6 @@ PaintDoc* PaintView::GetDocument() const // 非调试版本是内联的
 
 
 // PaintView 消息处理程序
-
-
 void PaintView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
@@ -172,7 +173,7 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 
 			break;
 
-		case DrawType::Rectangle:
+		case DrawType::Rectangle: // 绘制矩形
 		{
 			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色（背景色或笔的颜色）
 			dc.SelectStockObject(5); // 透明画刷，避免覆盖
@@ -187,7 +188,7 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 			break;
 		}
 
-		case DrawType::Circle:
+		case DrawType::Circle: // 绘制圆形
 		{
 			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色（背景色或笔的颜色）
 			dc.SelectStockObject(5); // 透明画刷，避免覆盖
@@ -203,7 +204,7 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 			m_PointEnd = point;
 			break;
 		}
-		case DrawType::Ellipse:
+		case DrawType::Ellipse:// 绘制椭圆
 		{
 			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色（背景色或笔的颜色）
 			dc.SelectStockObject(5); // 透明画刷，避免覆盖
@@ -218,7 +219,22 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 			break;
 		}
 
-		case DrawType::Text:
+		case DrawType::Text: // 文本输入
+		{
+			// 如果没有输入框，就创建一个
+			if (m_Edit == nullptr) {
+				m_Edit = new CEdit(); // 用new按住时能一直存在
+				m_Edit->Create(WS_CHILD | WS_VISIBLE | WS_BORDER, CRect(m_PointBegin, point), this, m_TextId);
+				m_Edit->ShowWindow(SW_SHOW);
+			}
+
+			// 更新文本框位置
+			m_Edit->MoveWindow(CRect(m_PointBegin, point)); // 更新位置
+
+			m_TextPos = point; // 记录文本位置
+
+			break;
+		}
 		{
 			// 每到一个新位置，用新的框替代旧的框
 			if (m_Edit != nullptr) {
@@ -238,7 +254,7 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 			break;
 		}
 
-		case DrawType::Pencil:
+		case DrawType::Pencil: // 铅笔
 		{
 			m_PointBegin = m_PointEnd;
 			m_PointEnd = point;
@@ -247,7 +263,7 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 			break;
 		}
 
-		case DrawType::Eraser:
+		case DrawType::Eraser: // 擦除
 		{
 			COLORREF pColor = dc.GetBkColor();
 			CPen newPen(PS_SOLID, m_PenSize, pColor);
@@ -266,13 +282,14 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 			break;
 		}
 
-		dc.SelectObject(oldPen); // 退出switch后把笔拿回来，否则不能正确地释放
+		dc.SelectObject(oldPen); // 选择换哪支笔
 	}
 
 
 	CView::OnMouseMove(nFlags, point);
 }
 
+// 将矩形转换为正方形
 void PaintView::ConvertToSquare(CRect& rect)
 {
 	int width = rect.Width();
@@ -292,7 +309,7 @@ void PaintView::ConvertToSquare(CRect& rect)
 	}
 }
 
-
+// 鼠标左键抬起时，结束绘制
 void PaintView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
@@ -360,7 +377,6 @@ void PaintView::OnLButtonUp(UINT nFlags, CPoint point)
 
 			break;
 		}
-
 		 default:
 
 			break;
@@ -370,9 +386,7 @@ void PaintView::OnLButtonUp(UINT nFlags, CPoint point)
 	CView::OnLButtonUp(nFlags, point);
 }
 
-
-
-
+// 绘制线段
 void PaintView::OnDrawLineSegment()
 {
 	m_DrawType = DrawType::LineSegment;
@@ -380,7 +394,7 @@ void PaintView::OnDrawLineSegment()
 	// TODO: 在此添加命令处理程序代码
 }
 
-
+// 绘制矩形
 void PaintView::OnDrawRectangle()
 {
 	m_DrawType = DrawType::Rectangle;
@@ -388,7 +402,7 @@ void PaintView::OnDrawRectangle()
 	// TODO: 在此添加命令处理程序代码
 }
 
-
+// 绘制圆形
 void PaintView::OnDrawCircle()
 {
 	m_DrawType = DrawType::Circle;
@@ -396,7 +410,7 @@ void PaintView::OnDrawCircle()
 	// TODO: 在此添加命令处理程序代码
 }
 
-
+// 绘制椭圆
 void PaintView::OnDrawEllipse()
 {
 	m_DrawType = DrawType::Ellipse;
@@ -404,7 +418,7 @@ void PaintView::OnDrawEllipse()
 	// TODO: 在此添加命令处理程序代码
 }
 
-
+// 设置颜色对话框
 void PaintView::OnSetColor()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -417,7 +431,7 @@ void PaintView::OnSetColor()
 	}
 }
 
-
+// 设置画笔大小对话框
 void PaintView::OnSetPenSize()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -437,7 +451,7 @@ void PaintView::OnText()
 	// TODO: 在此添加命令处理程序代码
 }
 
-
+// 预处理消息
 BOOL PaintView::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 在此添加专用代码和/或调用基类
@@ -462,21 +476,40 @@ BOOL PaintView::PreTranslateMessage(MSG* pMsg)
 	return CView::PreTranslateMessage(pMsg);
 }
 
-
+// 设置画笔为铅笔
 void PaintView::OnSetPencil()
 {
 	// TODO: 在此添加命令处理程序代码
 	m_DrawType = DrawType::Pencil;
 }
 
-
+// 设置橡皮擦
 void PaintView::OnSetEraser()
 {
 	// TODO: 在此添加命令处理程序代码
 	m_DrawType = DrawType::Eraser;
 }
 
+// 打开文件:加载图片
+void PaintView::ONLoadFile()
+{
+	CFileDialog fileDlg(TRUE, _T("png"), NULL, 0, _T("image Files(*.bmp; *.jpeg;*.jpg;*.png)|*.JPG;*.PNG;*.BMP|All Files (*.*) |*.*|"), this);
+	fileDlg.DoModal();
+	CString StrFilePath = fileDlg.GetPathName();
+	if (StrFilePath == _T(""))
+	{
+		return;
+	}
+	CDC* pdc = GetDC();
+	CRect rect;
+	GetClientRect(&rect);
+	CImage image;
+	image.Load(StrFilePath);
+	image.BitBlt(*pdc, 40, 40, rect.Width(), rect.Height(), 0, 0);
+	image.Destroy();    //放置内存泄漏。
+}
 
+// 保存文件:保存图片
 void PaintView::OnFileSave() // 保存
 {
 	// TODO: 在此添加命令处理程序代码
@@ -532,10 +565,10 @@ void PaintView::OnFileSave() // 保存
 
 	}
 	//AfxMessageBox(saveFilePath);               //显示图像保存的全路径(包含文件名)
-	HRESULT hResult = image.Save(saveFilePath);     //保存图像
+	HRESULT hResult = image.Save(saveFilePath);  //保存图像
 	if (FAILED(hResult))
 	{
-		MessageBox(_T("保存图像文件失败！"));
+		MessageBox(_T("保存文件失败！"));
 	}
 	else
 	{
@@ -546,21 +579,21 @@ void PaintView::OnFileSave() // 保存
 	SelectObject(hdc, hOldMap);
 }
 
-
+// 设置画笔大小为1
 void PaintView::OnPenSize1()
 {
 	// TODO: 在此添加命令处理程序代码
 	this->m_PenSize = 1;
 }
 
-
+// 设置画笔大小为3
 void PaintView::OnPenSize3()
 {
 	// TODO: 在此添加命令处理程序代码
 	this->m_PenSize = 3;
 }
 
-
+// 设置画笔大小为5
 void PaintView::OnPenSize5()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -572,4 +605,15 @@ void PaintView::OnPenSize8()
 {
 	// TODO: 在此添加命令处理程序代码
 	this->m_PenSize = 8;
+}
+
+// 清空
+void PaintView::OnSetClear()
+{
+		//将绘图缓冲区清空为白色背景
+		CClientDC dc(this);
+		CRect rect;
+		GetClientRect(&rect);
+		dc.FillSolidRect(rect, RGB(255, 255, 255));
+	// TODO: 在此添加控件通知处理程序代码
 }

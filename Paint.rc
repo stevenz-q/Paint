@@ -112,7 +112,7 @@ BEGIN
     POPUP "文件(&F)"
     BEGIN
         MENUITEM "新建(&N)\tCtrl+N",              ID_FILE_NEW
-        MENUITEM "打开(&O)...\tCtrl+O",           ID_FILE_OPEN
+        MENUITEM "打开(&O)...\tCtrl+O",           ID_FILE_PAGE_SETUP
         MENUITEM "保存(&S)\tCtrl+S",              ID_FILE_SAVE
         MENUITEM "另存为(&A)...",                  ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
@@ -141,6 +141,7 @@ BEGIN
     BEGIN
         MENUITEM "橡皮",                          IDM_SET_ERASER
         MENUITEM "文本",                          IDM_TEXT
+        MENUITEM "清空",                          ID_SET_CLEAR
     END
     POPUP "画笔(&P)"
     BEGIN

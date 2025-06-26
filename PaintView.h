@@ -67,11 +67,13 @@ public:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnSetPencil();
 	afx_msg void OnSetEraser();
+	afx_msg void PaintView::ONLoadFile();
 	afx_msg void OnFileSave();
 	afx_msg void OnPenSize1();
 	afx_msg void OnPenSize3();
 	afx_msg void OnPenSize5();
 	afx_msg void OnPenSize8();
+	afx_msg void OnSetClear();
 };
 
 
