@@ -251,11 +251,11 @@ BEGIN
         BLOCK "080404b0"
         BEGIN
             VALUE "CompanyName", "TODO:  <公司名>"
-            VALUE "FileDescription", "DrawLine2021213380"
+            VALUE "FileDescription", "Paint"
             VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "DrawLine2021213380.exe"
+            VALUE "InternalName", "Paint.exe"
             VALUE "LegalCopyright", "TODO:  (C) <公司名>。  保留所有权利。"
-            VALUE "OriginalFilename", "DrawLine2021213380.exe"
+            VALUE "OriginalFilename", "Paint.exe"
             VALUE "ProductName", "TODO:  <产品名>"
             VALUE "ProductVersion", "1.0.0.1"
         END

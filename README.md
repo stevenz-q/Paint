@@ -24,7 +24,10 @@
 
 ## 开发环境
 
-	Visual Studio 2022
+Windows SDK版本:10.0.22621.0
+平台工具集:Visual Studio 2022 (v143)
+平台工具集:默认(ISO C++14标准)
+C语言标准:默认(旧MSVC)
 
 ## 程序类型
 
@@ -32,6 +35,6 @@
 
 项目样式:MFC standard
 
-## ABOUT
+## About
 
-**update 2025/6/26**
+**Update 2025/6/26**

@@ -144,7 +144,6 @@ void PaintView::OnLButtonDown(UINT nFlags, CPoint point)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	m_PointBegin = m_PointEnd = point; // 初始化begin
 	m_TextPos = point;
-
 	// 在起点画一笔（画一个点）
 	CClientDC dc(this);
 
@@ -171,61 +170,43 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 		}
 		switch (m_DrawType) {
 		case DrawType::LineSegment:// 绘制线段
-
-			dc.SetROP2(R2_NOTXORPEN); // 再画一次可以将刚才的消掉，可以不用重绘就能随意在屏幕画了再"擦"
-
+			dc.SetROP2(R2_NOTXORPEN); // 再画一次可以将刚才的消掉
 			dc.MoveTo(m_PointBegin);
-			dc.LineTo(m_PointEnd); // 把上一次的线清理掉（起点画的点）
-
-			dc.MoveTo(m_PointBegin);
+			dc.LineTo(m_PointEnd); // 把上一次的线清理掉
 			dc.LineTo(point); // 画一个新的
-
 			m_PointEnd = point; // 下一次可以把这一次的盖掉
-
 			break;
-
 		case DrawType::Rectangle: // 绘制矩形
 		{
-			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色（背景色或笔的颜色）
-			//dc.SelectStockObject(NULL_BRUSH); // 使用透明画刷，避免填充颜色
-
-
+			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色
 			CRect rectP1(m_PointBegin, m_PointEnd); // 起点与终点
 			dc.Rectangle(rectP1);
 			CRect rectP2(m_PointBegin, point); // 起点与终点
 			dc.Rectangle(rectP2);
-
 			m_PointEnd = point;
 			break;
 		}
 
 		case DrawType::Circle: // 绘制圆形
 		{
-			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色（背景色或笔的颜色）
-			//dc.SelectStockObject(5); // 透明画刷，避免覆盖
-
+			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色
 			CRect rectP1(m_PointBegin, m_PointEnd); // 起点与终点
 			ConvertToSquare(rectP1);
 			dc.Ellipse(rectP1);
-
 			CRect rectP2(m_PointBegin, point); // 起点与终点
 			ConvertToSquare(rectP2);
 			dc.Ellipse(rectP2);
-
 			m_PointEnd = point;
 			break;
 		}
 		case DrawType::Ellipse:// 绘制椭圆
 		{
-			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色（背景色或笔的颜色）
-			//dc.SelectStockObject(5); // 透明画刷，避免覆盖
-
+			dc.SetROP2(R2_NOTXORPEN); // 选择合适的颜色
+			//dc.SelectStockObject(5); // 透明画刷
 			CRect rectP1(m_PointBegin, m_PointEnd); // 起点与终点
 			dc.Ellipse(rectP1);
-
 			CRect rectP2(m_PointBegin, point); // 起点与终点
 			dc.Ellipse(rectP2);
-
 			m_PointEnd = point;
 			break;
 		}
@@ -234,16 +215,14 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 		{
 			// 如果没有输入框，就创建一个
 			if (m_Edit == nullptr) {
-				m_Edit = new CEdit(); // 用new按住时能一直存在
+				m_Edit = new CEdit(); 
 				m_Edit->Create(WS_CHILD | WS_VISIBLE | WS_BORDER, CRect(m_PointBegin, point), this, m_TextId);
 				m_Edit->ShowWindow(SW_SHOW);
 			}
 
 			// 更新文本框位置
 			m_Edit->MoveWindow(CRect(m_PointBegin, point)); // 更新位置
-
 			m_TextPos = point; // 记录文本位置
-
 			break;
 		}
 		{
@@ -251,13 +230,10 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 			if (m_Edit != nullptr) {
 				delete m_Edit;
 			}
-
 			// 显示文本框
-			CEdit* myEdit = new CEdit(); // 用new按住时能一直存在
+			CEdit* myEdit = new CEdit(); 
 			myEdit->Create(WS_CHILD | WS_VISIBLE | WS_BORDER, CRect(m_PointBegin, point), this, m_TextId);
-
 			m_Edit = myEdit;
-
 			myEdit->ShowWindow(SW_SHOW);
 
 			// 输入文本完毕后删掉框，留下字体
@@ -279,24 +255,18 @@ void PaintView::OnMouseMove(UINT nFlags, CPoint point)
 			COLORREF pColor = dc.GetBkColor();
 			CPen newPen(PS_SOLID, m_PenSize, pColor);
 			dc.SelectObject(&newPen);
-
 			m_PointBegin = m_PointEnd;
 			m_PointEnd = point;
 			dc.MoveTo(m_PointBegin);
 			dc.LineTo(m_PointEnd);
 			break;
 		}
-
-
-		default:
-			
+		default:			
 			break;
 		}
 
 		dc.SelectObject(oldPen); // 选择换哪支笔
 	}
-
-
 	CView::OnMouseMove(nFlags, point);
 }
 
@@ -305,9 +275,7 @@ void PaintView::ConvertToSquare(CRect& rect)
 {
 	int width = rect.Width();
 	int height = rect.Height();
-
 	int diff = abs(width - height);
-
 	if (width > height)
 	{
 		int newY = rect.top - diff / 2;
@@ -324,29 +292,24 @@ void PaintView::ConvertToSquare(CRect& rect)
 void PaintView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
-
 	// 再画一遍，使相交的点不会空白
-	// 
 	// 矩形
 	CClientDC dc(this);
 	CPen newPen, * oldPen;
 	newPen.CreatePen(PS_SOLID, m_PenSize, m_PenColor); // 创建一支笔
 	oldPen = dc.SelectObject(&newPen); // 选择换哪支笔
-
 	// 线段
 	switch (m_DrawType) {
 		case DrawType::LineSegment:
 			dc.MoveTo(m_PointBegin);
 			dc.LineTo(point); 
 		break;
-
 		// 使相交处不空白，与线段同理
 		case DrawType::Rectangle:
 		{
 			dc.SelectStockObject(PS_NULL); // 透明画刷（填充中间的部分），避免覆盖
 			CRect rectP2(m_PointBegin, point); // 起点与终点
 			dc.Rectangle(rectP2);
-
 			break;
 		}
 		case DrawType::Ellipse:
@@ -354,7 +317,6 @@ void PaintView::OnLButtonUp(UINT nFlags, CPoint point)
 			dc.SelectStockObject(PS_NULL); // 透明画刷（填充中间的部分），避免覆盖
 			CRect rectP2(m_PointBegin, point); // 起点与终点
 			dc.Ellipse(rectP2);
-
 			break;
 		}
 		case DrawType::Circle:
@@ -368,28 +330,20 @@ void PaintView::OnLButtonUp(UINT nFlags, CPoint point)
 		case DrawType::Text:
 		{
 			// 实现动态拖动
-
-
 			// 显示文本框
 			CEdit* myEdit = new CEdit(); // 用new按住时能一直存在
 			myEdit->Create(WS_CHILD | WS_VISIBLE | WS_BORDER, CRect(m_PointBegin, point), this, m_TextId);
 			myEdit->ShowWindow(SW_SHOW);
-
 			// 每到一个新位置，用新的框替代旧的框
 			if (nullptr != m_Edit) {
+				// 释放对象
 				delete m_Edit;
 			}
-			
-			// new的对象必须释放掉，否则内存泄漏
-			// 是空指针的时候，直接存进来就行
 			m_Edit = myEdit;
-
 			myEdit->ShowWindow(SW_SHOW);
-
 			break;
 		}
 		 default:
-
 			break;
 	}
 
@@ -401,7 +355,6 @@ void PaintView::OnLButtonUp(UINT nFlags, CPoint point)
 void PaintView::OnDrawLineSegment()
 {
 	m_DrawType = DrawType::LineSegment;
-
 	// TODO: 在此添加命令处理程序代码
 }
 
@@ -409,7 +362,6 @@ void PaintView::OnDrawLineSegment()
 void PaintView::OnDrawRectangle()
 {
 	m_DrawType = DrawType::Rectangle;
-
 	// TODO: 在此添加命令处理程序代码
 }
 
@@ -417,7 +369,6 @@ void PaintView::OnDrawRectangle()
 void PaintView::OnDrawCircle()
 {
 	m_DrawType = DrawType::Circle;
-
 	// TODO: 在此添加命令处理程序代码
 }
 
@@ -425,7 +376,6 @@ void PaintView::OnDrawCircle()
 void PaintView::OnDrawEllipse()
 {
 	m_DrawType = DrawType::Ellipse;
-
 	// TODO: 在此添加命令处理程序代码
 }
 
@@ -475,11 +425,9 @@ BOOL PaintView::PreTranslateMessage(MSG* pMsg)
 			delete m_Edit;
 			// 释放之后要赋值
 			m_Edit = nullptr;
-
 			CClientDC dc(this);
 			// 输出的地方
 			dc.TextOutW(m_TextPos.x, m_TextPos.y, pStr);
-
 			return TRUE;
 		}
 	}

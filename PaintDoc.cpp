@@ -1,5 +1,5 @@
 
-// DrawLine2021213380Doc.cpp: PaintDoc 类的实现
+// PaintDoc 类的实现
 //
 
 #include "pch.h"
@@ -45,9 +45,6 @@ BOOL PaintDoc::OnNewDocument()
 
 	return TRUE;
 }
-
-
-
 
 // PaintDoc 序列化
 

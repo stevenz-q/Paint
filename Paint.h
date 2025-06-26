@@ -1,6 +1,4 @@
-
-// DrawLine2021213380.h: DrawLine2021213380 应用程序的主头文件
-//
+// 应用程序的主头文件
 #pragma once
 
 #ifndef __AFXWIN_H__
@@ -8,12 +6,7 @@
 #endif
 
 #include "resource.h"       // 主符号
-
-
 // Paint:
-// 有关此类的实现，请参阅 DrawLine2021213380.cpp
-//
-
 class Paint : public CWinApp
 {
 public:

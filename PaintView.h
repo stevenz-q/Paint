@@ -1,6 +1,4 @@
-
-// PaintView 类的接口
-//
+// PaintView 类
 
 #pragma once
 #include "PaintDoc.h"
@@ -56,7 +54,6 @@ public:
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	
 	afx_msg void OnDrawLineSegment();
 	afx_msg void OnDrawRectangle();
 	afx_msg void OnDrawCircle();
@@ -77,79 +74,7 @@ public:
 	afx_msg void OnUpdateIsfilled(CCmdUI* pCmdUI);
 	afx_msg void PaintView::OnSetIsfilled();
 };
-
-
-//class CDragRect 
-//{
-//public:
-//    void OnInitDialog(HWND hwnd);
-//
-//    void OnSize(int x, int y);
-//    void OnPaint(HDC hdc);
-//
-//    void OnMouseDown(int x, int y);
-//    void OnMouseUp();
-//    void OnMouseMove(int x, int y);
-//
-//    // 矩形的最小大小
-//    void SetMinSize(int width, int height) { mMinWidth = width; mMinHeight = height; }
-//
-//protected:
-//    // 在区域内
-//    static bool mIsAtRect(RECT& rect, int x, int y) {
-//        if (x > rect.left && x < rect.right && y > rect.top && y < rect.bottom) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    // 在右下角(设置大小)区域内
-//    static bool mIsAtSERect(RECT& rect, int x, int y) {
-//        RECT rct;
-//        int width = 5;
-//        rct.left = rect.right - width;
-//        rct.top = rect.bottom - width;
-//        rct.right = rect.right + width;
-//        rct.bottom = rect.bottom + width;
-//
-//        return mIsAtRect(rct, x, y);
-//    }
-//
-//    // 获取光标
-//    static HCURSOR yGetWndCursor(HWND hWnd) {
-//        DWORD currCur = ::GetClassLong(hWnd, GCL_HCURSOR);
-//        return (HCURSOR)currCur;
-//    }
-//
-//    // 设置光标
-//    static void ySetWndCursor(HWND hWnd, HCURSOR hCursor) {
-//        DWORD current = ::GetClassLong(hWnd, GCL_HCURSOR);
-//        if (current != (LONG)hCursor) {
-//            ::SetClassLong(hWnd, GCL_HCURSOR, (LONG)hCursor);
-//        }
-//    }
-//
-//public:
-//    static HWND mHwnd; //矩形所在的窗口
-//    static RECT rectDrag; // 拖动的句柄区域
-//    static bool mIsMouseDown;
-//    static POINT mMouseDownLocation; // 鼠标按下时的位置
-//    static RECT mouseDownRect; // 记录鼠标按下时rectDrag的值， 用于计算拖动后的大小
-//    HCURSOR mCurSizeAll, mCurSizeNWSE, mCurDefault; //鼠标
-//    int mMinWidth, mMinHeight; // 矩形的最小大小
-//    int mMargin; // 矩形距离边缘的最小距离
-//};
-
-
-
-
-
-
-
-
-
-
-#ifndef _DEBUG  // DrawLine2021213380View.cpp 中的调试版本
+#ifndef _DEBUG 
 inline PaintDoc* PaintView::GetDocument() const
    { return reinterpret_cast<PaintDoc*>(m_pDocument); }
 #endif
