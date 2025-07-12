@@ -17,7 +17,7 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// ����(���壬�й�) resources
+// 中文(简体，中国) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
@@ -52,9 +52,9 @@ BEGIN
     "\r\n"
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
     "LANGUAGE 4, 2\r\n"
-    "#include ""res\\Paint.rc2""  // �� Microsoft Visual C++ �༭����Դ\r\n"
-    "#include ""l.CHS\\afxres.rc""      // ��׼���\r\n"
-    "#include ""l.CHS\\afxprint.rc""    // ��ӡ/��ӡԤ����Դ\r\n"
+    "#include ""res\\Paint.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
+    "#include ""l.CHS\\afxres.rc""      // 标准组件\r\n"
+    "#include ""l.CHS\\afxprint.rc""    // 打印/打印预览资源\r\n"
     "#endif\r\n"
     "\0"
 END
@@ -109,68 +109,68 @@ END
 
 IDR_MAINFRAME MENU
 BEGIN
-    POPUP "�ļ�(&F)"
+    POPUP "文件(&F)"
     BEGIN
-        MENUITEM "�½�(&N)\tCtrl+N",              ID_FILE_NEW
-        MENUITEM "��(&O)...\tCtrl+O",           ID_FILE_OPEN
-        MENUITEM "����(&S)\tCtrl+S",              ID_FILE_SAVE
-        MENUITEM "����Ϊ(&A)...",                  ID_FILE_SAVE_AS
+        MENUITEM "新建(&N)\tCtrl+N",              ID_FILE_NEW
+        MENUITEM "打开(&O)...\tCtrl+O",           ID_FILE_OPEN
+        MENUITEM "保存(&S)\tCtrl+S",              ID_FILE_SAVE
+        MENUITEM "另存为(&A)...",                  ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
-        MENUITEM "��ӡ(&P)...\tCtrl+P",           ID_FILE_PRINT
-        MENUITEM "��ӡԤ��(&V)",                    ID_FILE_PRINT_PREVIEW
-        MENUITEM "��ӡ����(&R)...",                 ID_FILE_PRINT_SETUP
+        MENUITEM "打印(&P)...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "打印预览(&V)",                    ID_FILE_PRINT_PREVIEW
+        MENUITEM "打印设置(&R)...",                 ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "������ļ�",                       ID_FILE_MRU_FILE1
+        MENUITEM "最近的文件",                       ID_FILE_MRU_FILE1
         MENUITEM SEPARATOR
-        MENUITEM "�˳�(&X)",                      ID_APP_EXIT
+        MENUITEM "退出(&X)",                      ID_APP_EXIT
     END
-    POPUP "�༭(&E)"
+    POPUP "编辑(&E)"
     BEGIN
-        MENUITEM "����(&U)\tCtrl+Z",              ID_EDIT_UNDO
+        MENUITEM "撤消(&U)\tCtrl+Z",              ID_EDIT_UNDO
         MENUITEM SEPARATOR
-        MENUITEM "����(&T)\tCtrl+X",              ID_EDIT_CUT
-        MENUITEM "����(&C)\tCtrl+C",              ID_EDIT_COPY
-        MENUITEM "ճ��(&P)\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM "剪切(&T)\tCtrl+X",              ID_EDIT_CUT
+        MENUITEM "复制(&C)\tCtrl+C",              ID_EDIT_COPY
+        MENUITEM "粘贴(&P)\tCtrl+V",              ID_EDIT_PASTE
     END
-    POPUP "��ͼ(&V)"
+    POPUP "视图(&V)"
     BEGIN
-        MENUITEM "������(&T)",                     ID_VIEW_TOOLBAR
-        MENUITEM "״̬��(&S)",                     ID_VIEW_STATUS_BAR
+        MENUITEM "工具栏(&T)",                     ID_VIEW_TOOLBAR
+        MENUITEM "状态栏(&S)",                     ID_VIEW_STATUS_BAR
     END
-    POPUP "����(&T)"
+    POPUP "工具(&T)"
     BEGIN
-        MENUITEM "Ǧ��",                          ID_SET_PENCIL
-        MENUITEM "�ı�",                          IDM_TEXT
+        MENUITEM "铅笔",                          ID_SET_PENCIL
+        MENUITEM "文本",                          IDM_TEXT
         MENUITEM SEPARATOR
-        MENUITEM "��Ƥ",                          IDM_SET_ERASER
-        MENUITEM "���",                          ID_SET_CLEAR
+        MENUITEM "橡皮",                          IDM_SET_ERASER
+        MENUITEM "清空",                          ID_SET_CLEAR
     END
-    POPUP "����(&P)"
+    POPUP "画笔(&P)"
     BEGIN
-        MENUITEM "Ǧ��",                          ID_SET_PENCIL
+        MENUITEM "铅笔",                          ID_SET_PENCIL
     END
-    POPUP "��״(&S)"
+    POPUP "形状(&S)"
     BEGIN
-        MENUITEM "ֱ��",                          IDM_LINE
-        MENUITEM "����",                          IDM_RECTANGLE
-        MENUITEM "Բ",                           IDM_CIRCLE
-        MENUITEM "��Բ",                          IDM_ECLIPSE
+        MENUITEM "直线",                          IDM_LINE
+        MENUITEM "矩形",                          IDM_RECTANGLE
+        MENUITEM "圆",                           IDM_CIRCLE
+        MENUITEM "椭圆",                          IDM_ECLIPSE
         MENUITEM SEPARATOR
-        MENUITEM "���ͼ",                         ID_ISFilled, INACTIVE
+        MENUITEM "填充图",                         ID_ISFilled, INACTIVE
     END
-    POPUP "��ϸ(&W)"
+    POPUP "粗细(&W)"
     BEGIN
-        MENUITEM "1����",                         ID_32785
-        MENUITEM "3����",                         ID_32786
-        MENUITEM "5����",                         ID_32787
-        MENUITEM "8����",                         ID_32788
+        MENUITEM "1像素",                         ID_32785
+        MENUITEM "3像素",                         ID_32786
+        MENUITEM "5像素",                         ID_32787
+        MENUITEM "8像素",                         ID_32788
         MENUITEM SEPARATOR
-        MENUITEM "�Զ���",                         IDM_LINWIDTH
+        MENUITEM "自定义",                         IDM_LINWIDTH
     END
-    MENUITEM "��ɫ(&C)",                      IDM_SET_COLOR
-    POPUP "����(&H)"
+    MENUITEM "颜色(&C)",                      IDM_SET_COLOR
+    POPUP "帮助(&H)"
     BEGIN
-        MENUITEM "����(&A)...",                   ID_APP_ABOUT
+        MENUITEM "关于(&A)...",                   ID_APP_ABOUT
     END
 END
 
@@ -206,25 +206,25 @@ END
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 202, 63
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "���� Paint"
+CAPTION "关于 Paint"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,14,20,20
-    LTEXT           "Paint���汾 1.0",IDC_STATIC,42,14,153,8,SS_NOPREFIX
-    LTEXT           "��Ȩ���� (C) 2025",IDC_STATIC,42,39,114,8
-    DEFPUSHBUTTON   "ȷ��",IDOK,145,42,50,14,WS_GROUP
-    LTEXT           "����: 2023214563 ��������SDTBU",IDC_STATIC,41,26,115,8
+    LTEXT           "Paint，版本 1.0",IDC_STATIC,42,14,153,8,SS_NOPREFIX
+    LTEXT           "版权所有 (C) 2025",IDC_STATIC,42,39,114,8
+    DEFPUSHBUTTON   "确定",IDOK,145,42,50,14,WS_GROUP
+    LTEXT           "作者: stevenz-q@github",IDC_STATIC,41,26,115,8
 END
 
 IDD_LINEWIDTHBOX DIALOGEX 0, 0, 119, 58
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "�Զ����ϸ"
+CAPTION "自定义粗细"
 FONT 8, "Microsoft Sans Serif", 400, 0, 0x0
 BEGIN
     EDITTEXT        IDC_PENSIZE_INPUT,63,7,37,14,ES_AUTOHSCROLL
-    DEFPUSHBUTTON   "ȷ��",IDOK,7,37,50,14
-    PUSHBUTTON      "ȡ��",IDCANCEL,61,37,50,14
-    LTEXT           "���ش�С:",IDC_STATIC,21,7,37,14,SS_CENTERIMAGE
+    DEFPUSHBUTTON   "确定",IDOK,7,37,50,14
+    PUSHBUTTON      "取消",IDCANCEL,61,37,50,14
+    LTEXT           "像素大小:",IDC_STATIC,21,7,37,14,SS_CENTERIMAGE
 END
 
 
@@ -250,13 +250,13 @@ BEGIN
     BEGIN
         BLOCK "080404b0"
         BEGIN
-            VALUE "CompanyName", "TODO:  <��˾��>"
+            VALUE "CompanyName", "TODO:  <公司名>"
             VALUE "FileDescription", "Paint"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "Paint.exe"
-            VALUE "LegalCopyright", "TODO:  (C) <��˾��>��  ��������Ȩ����"
+            VALUE "LegalCopyright", "TODO:  (C) <公司名>。  保留所有权利。"
             VALUE "OriginalFilename", "Paint.exe"
-            VALUE "ProductName", "TODO:  <��Ʒ��>"
+            VALUE "ProductName", "TODO:  <产品名>"
             VALUE "ProductVersion", "1.0.0.1"
         END
     END
@@ -317,7 +317,7 @@ END
 
 STRINGTABLE
 BEGIN
-    IDP_OLE_INIT_FAILED     "OLE ��ʼ��ʧ�ܡ�  ��ȷ�� OLE ������ȷ�İ汾��"
+    IDP_OLE_INIT_FAILED     "OLE 初始化失败。  请确保 OLE 库是正确的版本。"
 END
 
 STRINGTABLE
@@ -328,7 +328,7 @@ END
 STRINGTABLE
 BEGIN
     AFX_IDS_APP_TITLE       "Paint"
-    AFX_IDS_IDLEMESSAGE     "����"
+    AFX_IDS_IDLEMESSAGE     "就绪"
 END
 
 STRINGTABLE
@@ -343,99 +343,99 @@ END
 
 STRINGTABLE
 BEGIN
-    ID_FILE_NEW             "�������ĵ�\n�½�"
-    ID_FILE_OPEN            "�������ĵ�\n��"
-    ID_FILE_CLOSE           "�رջ�ĵ�\n�ر�"
-    ID_FILE_SAVE            "�����ĵ�\n����"
-    ID_FILE_SAVE_AS         "�������Ʊ����ĵ�\n����Ϊ"
-    ID_FILE_PAGE_SETUP      "���Ĵ�ӡѡ��\nҳ������"
-    ID_FILE_PRINT_SETUP     "���Ĵ�ӡ��ѡ��ʹ�ӡѡ��\n��ӡ����"
-    ID_FILE_PRINT           "��ӡ��ĵ�\n��ӡ"
-    ID_FILE_PRINT_DIRECT    "ʹ�õ�ǰѡ���ӡ��ĵ�\n���ٴ�ӡ"
-    ID_FILE_PRINT_PREVIEW   "��ʾ��ҳ\n��ӡԤ��"
+    ID_FILE_NEW             "创建新文档\n新建"
+    ID_FILE_OPEN            "打开现有文档\n打开"
+    ID_FILE_CLOSE           "关闭活动文档\n关闭"
+    ID_FILE_SAVE            "保存活动文档\n保存"
+    ID_FILE_SAVE_AS         "用新名称保存活动文档\n另存为"
+    ID_FILE_PAGE_SETUP      "更改打印选项\n页面设置"
+    ID_FILE_PRINT_SETUP     "更改打印机选项和打印选项\n打印设置"
+    ID_FILE_PRINT           "打印活动文档\n打印"
+    ID_FILE_PRINT_DIRECT    "使用当前选项打印活动文档\n快速打印"
+    ID_FILE_PRINT_PREVIEW   "显示整页\n打印预览"
 END
 
 STRINGTABLE
 BEGIN
-    ID_APP_ABOUT            "��ʾ������Ϣ���汾�źͰ�Ȩ��Ϣ\n����"
-    ID_APP_EXIT             "�˳�Ӧ�ó�����ʾ�����ĵ�\n�˳�"
+    ID_APP_ABOUT            "显示程序信息、版本号和版权信息\n关于"
+    ID_APP_EXIT             "退出应用程序；提示保存文档\n退出"
 END
 
 STRINGTABLE
 BEGIN
-    ID_FILE_MRU_FILE1       "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE2       "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE3       "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE4       "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE5       "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE6       "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE7       "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE8       "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE9       "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE10      "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE11      "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE12      "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE13      "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE14      "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE15      "�򿪴��ĵ�"
-    ID_FILE_MRU_FILE16      "�򿪴��ĵ�"
+    ID_FILE_MRU_FILE1       "打开此文档"
+    ID_FILE_MRU_FILE2       "打开此文档"
+    ID_FILE_MRU_FILE3       "打开此文档"
+    ID_FILE_MRU_FILE4       "打开此文档"
+    ID_FILE_MRU_FILE5       "打开此文档"
+    ID_FILE_MRU_FILE6       "打开此文档"
+    ID_FILE_MRU_FILE7       "打开此文档"
+    ID_FILE_MRU_FILE8       "打开此文档"
+    ID_FILE_MRU_FILE9       "打开此文档"
+    ID_FILE_MRU_FILE10      "打开此文档"
+    ID_FILE_MRU_FILE11      "打开此文档"
+    ID_FILE_MRU_FILE12      "打开此文档"
+    ID_FILE_MRU_FILE13      "打开此文档"
+    ID_FILE_MRU_FILE14      "打开此文档"
+    ID_FILE_MRU_FILE15      "打开此文档"
+    ID_FILE_MRU_FILE16      "打开此文档"
 END
 
 STRINGTABLE
 BEGIN
-    ID_NEXT_PANE            "�л�����һ������\n��һ����"
-    ID_PREV_PANE            "�л�����һ������\n��һ����"
+    ID_NEXT_PANE            "切换到下一个窗格\n下一窗格"
+    ID_PREV_PANE            "切换回上一个窗格\n上一窗格"
 END
 
 STRINGTABLE
 BEGIN
-    ID_WINDOW_SPLIT         "������ڲ��Ϊ�������\n���"
+    ID_WINDOW_SPLIT         "将活动窗口拆分为多个窗格\n拆分"
 END
 
 STRINGTABLE
 BEGIN
-    ID_EDIT_CLEAR           "�����ѡ����\n���"
-    ID_EDIT_CLEAR_ALL       "���ȫ������\nȫ�����"
-    ID_EDIT_COPY            "������ѡ���ݣ�������������\n����"
-    ID_EDIT_CUT             "������ѡ���ݣ�������������\n����"
-    ID_EDIT_FIND            "����ָ�����ı�\n����"
-    ID_EDIT_PASTE           "�������������\nճ��"
-    ID_EDIT_REPEAT          "�ظ���һ����\n�ظ�"
-    ID_EDIT_REPLACE         "�������ı��滻�ض����ı�\n�滻"
-    ID_EDIT_SELECT_ALL      "ѡ�������ĵ�\nȫѡ"
-    ID_EDIT_UNDO            "������һ����\n����"
-    ID_EDIT_REDO            "�����ϴγ����Ĳ���\n����"
+    ID_EDIT_CLEAR           "清除所选内容\n清除"
+    ID_EDIT_CLEAR_ALL       "清除全部内容\n全部清除"
+    ID_EDIT_COPY            "复制所选内容，将其放入剪贴板\n复制"
+    ID_EDIT_CUT             "剪切所选内容，将其放入剪贴板\n剪切"
+    ID_EDIT_FIND            "查找指定的文本\n查找"
+    ID_EDIT_PASTE           "插入剪贴板内容\n粘贴"
+    ID_EDIT_REPEAT          "重复上一操作\n重复"
+    ID_EDIT_REPLACE         "用其他文本替换特定的文本\n替换"
+    ID_EDIT_SELECT_ALL      "选定整个文档\n全选"
+    ID_EDIT_UNDO            "撤消上一操作\n撤消"
+    ID_EDIT_REDO            "重做上次撤消的操作\n重做"
 END
 
 STRINGTABLE
 BEGIN
-    ID_VIEW_TOOLBAR         "��ʾ�����ع�����\n�л�������"
-    ID_VIEW_STATUS_BAR      "��ʾ������״̬��\n�л�״̬��"
+    ID_VIEW_TOOLBAR         "显示或隐藏工具栏\n切换工具栏"
+    ID_VIEW_STATUS_BAR      "显示或隐藏状态栏\n切换状态栏"
 END
 
 STRINGTABLE
 BEGIN
-    AFX_IDS_SCSIZE          "���Ĵ��ڴ�С"
-    AFX_IDS_SCMOVE          "���Ĵ���λ��"
-    AFX_IDS_SCMINIMIZE      "��������С��ͼ��"
-    AFX_IDS_SCMAXIMIZE      "�����ڷŴ����ߴ�"
-    AFX_IDS_SCNEXTWINDOW    "�л�����һ���ĵ�����"
-    AFX_IDS_SCPREVWINDOW    "�л�����һ���ĵ�����"
-    AFX_IDS_SCCLOSE         "�رջ���ڲ���ʾ�����ĵ�"
+    AFX_IDS_SCSIZE          "更改窗口大小"
+    AFX_IDS_SCMOVE          "更改窗口位置"
+    AFX_IDS_SCMINIMIZE      "将窗口缩小成图标"
+    AFX_IDS_SCMAXIMIZE      "将窗口放大到最大尺寸"
+    AFX_IDS_SCNEXTWINDOW    "切换到下一个文档窗口"
+    AFX_IDS_SCPREVWINDOW    "切换到上一个文档窗口"
+    AFX_IDS_SCCLOSE         "关闭活动窗口并提示保存文档"
 END
 
 STRINGTABLE
 BEGIN
-    AFX_IDS_SCRESTORE       "�����ڻָ���������С"
-    AFX_IDS_SCTASKLIST      "���������б�"
+    AFX_IDS_SCRESTORE       "将窗口恢复到正常大小"
+    AFX_IDS_SCTASKLIST      "激活任务列表"
 END
 
 STRINGTABLE
 BEGIN
-    AFX_IDS_PREVIEW_CLOSE   "�رմ�ӡԤ��ģʽ\nȡ��Ԥ��"
+    AFX_IDS_PREVIEW_CLOSE   "关闭打印预览模式\n取消预览"
 END
 
-#endif    // ����(���壬�й�) resources
+#endif    // 中文(简体，中国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -451,9 +451,9 @@ END
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE 4, 2
-#include "res\Paint.rc2"  // �� Microsoft Visual C++ �༭����Դ
-#include "l.CHS\afxres.rc"      // ��׼���
-#include "l.CHS\afxprint.rc"    // ��ӡ/��ӡԤ����Դ
+#include "res\Paint.rc2"  // 非 Microsoft Visual C++ 编辑的资源
+#include "l.CHS\afxres.rc"      // 标准组件
+#include "l.CHS\afxprint.rc"    // 打印/打印预览资源
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
